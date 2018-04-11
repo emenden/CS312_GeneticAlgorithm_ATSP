@@ -71,16 +71,12 @@ class TSPSolver:
         # find the initial bssf
         self.set_initial_bssf_soln(initial_population)
 
-        # for debugging
-        print("initial bssf cost: ", self._bssf.costOfRoute())
-        print("initial population size")
-        print(len(initial_population))
-        for solution in initial_population:
-            print("route cost: ", solution.costOfRoute())
-
-        # run the genetic algorithm
-        return self.genetic_tsp(initial_population)
-
+        results = {}
+        results['cost'] = self._bssf.costOfRoute()
+        results['time'] = time.time() - start_time
+        results['count'] = 0
+        results['soln'] = self._bssf
+        return results
 
     def set_initial_bssf_soln(self, initial_solutions):
         min_solution = initial_solutions[0]
@@ -97,7 +93,9 @@ class TSPSolver:
     This method will create a "results" dictionary expected by the gui 
     and return that to the greedy() method which called it. 
     '''
-    def genetic_tsp(self, population, time_allowance=60.0):
+    def fancy(self, population, time_allowance=60.0):
+        self.greedy(time.time(), time_allowance=60.0)
+
         start_time = time.time()
         # TODO will create generations until time is up, may want to regulate by num gens created
         while (time.time() - start_time) < time_allowance:
