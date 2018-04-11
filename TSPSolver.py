@@ -128,8 +128,34 @@ class TSPSolver:
     for the next generation.
     '''
     def survive_the_fittest(self, population):
+        remainingParents = population.copy()
+        survivingPopulation = []
 
-        pass
+        # while there are still parents to combine
+        while len(remainingParents) is not 0:
+            # get first random parent from remaining parents and delete from remainingParents list
+            index1 = random.randint(0, len(remainingParents)-1)
+            parent1 = self.Route(remainingParents[index1])
+            del remainingParents[index1]
+
+            # get second random parent from remaining parents and delete from remainingParents list
+            index2 = random.randint(0, len(remainingParents)-1)
+            parent2 = self.Route(remainingParents[index2])
+            del remainingParents[index2]
+
+            # combine: cross parents, then mutate the results to get the two children
+            cross1, cross2 = self.crossover(parent1, parent2)
+            child1, child2 = self.mutate(cross1, cross2)
+
+            # find the two routes with the smallest cost (between both parents and both children)
+            costs = [parent1, parent2, child1, child2]
+            costHeap = heapq.heapify(costs)
+            survivor1 = heapq.heappop(costHeap)
+            survivor2 = heapq.heappop(costHeap)
+
+            # add the two smallest routes to the survivingPopulation list
+            survivingPopulation.append(survivor1)
+            survivingPopulation.append(survivor2)
 
 
     '''
@@ -157,3 +183,14 @@ class TSPSolver:
     '''
     def mutate(self, childA, childB):
         pass
+
+
+    class Route:
+        def __init__(self, route):
+            # self.route= route
+            self.cost = route.costOfRoute()
+            self.route = route
+        def getRoute(self):
+            return self.route
+        def getCost(self):
+            return self.cost
