@@ -25,7 +25,6 @@ class TSPSolver:
         self._scenario = scenario
         self._cities = scenario.getCities()
 
-
     def defaultRandomTour( self, start_time, time_allowance=60.0 ):
         cities = self._scenario.getCities()
         ncities = len(cities)
@@ -47,7 +46,6 @@ class TSPSolver:
                 # Found a valid route
                 foundTour = True
                 return bssf
-
 
     '''
     This method is called by GUI. It will create the initial set of greedy solutions
@@ -73,10 +71,13 @@ class TSPSolver:
 
         # for debugging
         print("initial bssf cost: ", self._bssf.costOfRoute())
-        print("initial population size")
-        print(len(initial_population))
+        print("initial population size: ", len(initial_population), "\n")
+        # print(len(initial_population))
         for solution in initial_population:
             print("route cost: ", solution.costOfRoute())
+
+    #TODO: Shouldn't we return a "results" here, for when greedy is called by the GUI
+    #TODO:    and save the initial population to a self.initialPopulation to be used by genetic_tsp()? (to compare times)
 
         # run the genetic algorithm
         return self.genetic_tsp(initial_population)
@@ -127,6 +128,7 @@ class TSPSolver:
     for the next generation.
     '''
     def survive_the_fittest(self, population):
+
         pass
 
 
