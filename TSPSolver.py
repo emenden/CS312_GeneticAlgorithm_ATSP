@@ -186,10 +186,10 @@ class TSPSolver:
 
 
     class Route:
-        def __init__(self, route):
+        def __init__(self, tspSolution):
             # self.route= route
-            self.cost = route.costOfRoute()
-            self.route = route
+            self.cost = tspSolution.costOfRoute()
+            self.route = tspSolution
         def getRoute(self):
             return self.route
         def getCost(self):
